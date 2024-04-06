@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot;
 
 import dagger.Component;
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromGeneratedCoverage;
 import edu.northeastern.cs5500.starterbot.command.CommandModule;
 import edu.northeastern.cs5500.starterbot.listener.MessageListener;
 import edu.northeastern.cs5500.starterbot.repository.RepositoryModule;
@@ -21,6 +22,7 @@ interface BotComponent {
 }
 
 @Slf4j
+@ExcludeFromGeneratedCoverage
 public class Bot {
 
     @Inject
