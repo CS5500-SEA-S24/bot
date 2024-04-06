@@ -1,6 +1,7 @@
 package edu.northeastern.cs5500.starterbot.controller;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 import edu.northeastern.cs5500.starterbot.listener.FakeScheduledEventListener;
 import edu.northeastern.cs5500.starterbot.model.Event;
@@ -80,8 +81,13 @@ class NotificationControllerTest {
         assertThat(scheduledEventListener.getEvents()).isEmpty();
         assertThat(notificationController.pendingTask).isNull();
         notificationController.schedule(event);
+        // time out after five seconds
+        long timeoutTime = (new Date(now.getTime() + 5 * 1000)).getTime();
         while (notificationController.pendingTask != null
                 && notificationController.pendingTask.isDone() == false) {
+            if ((new Date()).getTime() > timeoutTime) {
+                fail("Timeout exceeded waiting for notifications to be sent.");
+            }
             Thread.sleep(50);
         }
         assertThat(scheduledEventListener.getUsers()).containsExactly(attendee);
