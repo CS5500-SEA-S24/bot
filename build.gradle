@@ -1,7 +1,4 @@
 plugins {
-    // Build "shadow" JARs for deployment
-    id 'com.github.johnrengelman.shadow'
-
     // Apply the java plugin to add support for Java
     id 'java'
 
@@ -93,9 +90,19 @@ jacocoTestReport {
     reports {
         xml.enabled true
         // Change html.enabled to true if you want html reports
-        html.enabled false
+        html.enabled true
         csv.enabled false
         xml.destination file("${buildDir}/reports/jacoco.xml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
     }
 }
 
